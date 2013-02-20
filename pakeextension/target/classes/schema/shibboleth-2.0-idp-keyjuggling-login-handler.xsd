@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://idp.example.com/shibboleth/test/idp"
+            xmlns="http://idp.example.com/shibboleth/test/idp"
+            xmlns:ph="urn:mace:shibboleth:2.0:idp:profile-handler"
+            elementFormDefault="qualified">
+
+  <xsd:import namespace="urn:mace:shibboleth:2.0:idp:profile-handler"
+              schemaLocation="classpath:/schema/shibboleth-2.0-idp-profile-handler.xsd" />
+
+ <xsd:complexType name="PasswordKeyExchangeLogin">
+        <xsd:complexContent>
+            <xsd:extension base="ph:LoginHandlerType">
+				<xsd:attribute name="jaasConfigurationLocation" type="xsd:anyURI">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Location of the JAAS configuration. If this attribute is used it will usually contain a file
+                            URL to a configuration on the local filesystem. However, this attribute need not be used and
+                            this information can be set within the VM in any manner supported by the JVM/container
+                            implementation.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="authenticationServletURL" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>
+						com.skym.shibboleth.idp.keyjuggling.PasswordKeyExchange
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
