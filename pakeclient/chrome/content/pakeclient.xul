@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+
+<overlay id="pakeclient"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	 
+<!-- 外部ライブラリ -->
+<script type="text/javascript" src="lib/2.3.0-crypto-min.js"></script>
+	 <script type="text/javascript" src="lib/sha256.js"></script>
+	 <script type="text/javascript" src="lib/sha1.js"></script>
+	 <script type="text/javascript" src="lib/jsbn.js"></script>
+	 <script type="text/javascript" src="lib/jsbn2.js"></script>
+	 <script type="text/javascript" src="lib/rsa.js"></script>
+	 <script type="text/javascript" src="lib/rsa2.js"></script>
+	 <script type="text/javascript" src="lib/ec.js"></script>
+	 <script type="text/javascript" src="lib/sec.js"></script>
+	 <script type="text/javascript" src="lib/base64.js"></script>
+	 <script type="text/javascript" src="lib/prng4.js"></script>
+	 <script type="text/javascript" src="lib/rng.js"></script>
+	 
+	 
+<!-- JavaScriptファイルのインポート PAKEfast.jsのファイル読み込み-->
+<script type="application/x-javascript" src="chrome://pakeclient/content/pakeclient.js"/>
+<!-- <script type="application/x-javascript" src="chrome://test/content/MyPAKE.js"/> -->
+<!-- ツールメニューへの追加 -->
+	<menupopup id="menu_ToolsPopup">
+	<!-- 読み込まれたファイルで指定されているアクセス用のものを用いて，その機能で宣言されている機能に対してアクセス-->
+		<menuitem insertafter="devToolsSeparator" label="pakeclient" oncommand="Client.wizard();"/>
+		<!-- <menuitem insertafter="devToolsSeparator" label="test" oncommand="Test.Round1();"/> -->
+		<!-- ダイアログを表示させるためのものを設定 PAKEfast.js内のopenSetupDialog()にアクセス-->
+		<!--<menuitem label="TestDialog" oncommand="openSetupDialog();"/>-->
+	</menupopup>
+</overlay>

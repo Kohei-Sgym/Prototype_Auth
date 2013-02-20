@@ -1,0 +1,1 @@
+http\://idp.example.com/shibboleth/test/idp = com.skym.shibboleth.idp.keyjuggling.KeyJugglingHandlerNamespaceHandler

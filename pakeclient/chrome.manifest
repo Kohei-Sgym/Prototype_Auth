@@ -1,0 +1,2 @@
+content pakeclient chrome/content/
+overlay chrome://browser/content/browser.xul chrome://pakeclient/content/pakeclient.xul
