@@ -8,6 +8,22 @@
 		ondialogcancel="Client.abort();">
 <!--Configuration Window -->
 <script type="application/x-javascript" src="chrome://pakeclient/content/pakeclient.js"/>
+<<<<<<< HEAD
+=======
+<!--<prefwindow id="PAKEAuthentication" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="認証" bottons="accept,cancel"> -->
+<!-- test configuration-->
+<!-- 設定のカテゴリごとにprefpaneを分ける(必ず書く必要がある)-->
+<!-- <preference id ="prefeName" label="一般"> -->
+<!-- 設定した項目の数だけ指定，nameに指定したい設定名を記入し，typeに(int,boolian,string)などを記入する-->
+<!-- -->
+<!--<prefpane id="shibAuth">
+<preferences>
+<preference id="shibID" name="userName" type="string"/>
+<preference id="shibPassword" name="userPass" type="string"/>
+</preferences> -->
+<!--適当に指定 -->
+<!-- <hbox>が横並び,<vbox>が立て並びにする感じ-->
+>>>>>>> 0c8f921c4c190847d700acc5e8590ba9de42505a
 <vbox>
 	<hbox>
 	<label id="shibId" value="ID"/>
@@ -18,8 +34,53 @@
 	<textbox id="password" preference="shibPassword"/>
 	</hbox>
 	<hbox>
+<<<<<<< HEAD
+=======
+	<!--<button id="authentication" label="認証" oncommand="Client.start();"/>
+	<button id="canchel" label="キャンセル" oncommand="Client.abort()"/>-->
+>>>>>>> 0c8f921c4c190847d700acc5e8590ba9de42505a
 	<button dlgtype="accept" value="認証"/>
 	<button dlgtype="cancel"/>
 	</hbox>
 </vbox>
+<<<<<<< HEAD
 </dialog>
+=======
+<!-- 設定ボタンでもこしらえて外身の部分を設定変更出来るような形でもとるか-->
+</dialog>
+<!--</prefpane>-->
+<!--問題回避のため<prefpane>要素の下に配置する必要あり -->
+<!-- <script type="application/x-javascript" src="chrome://test/content/PAKEClient.js"/>-->
+<!--</prefwindow>-->
+
+<!-- test wizardを確認する-->
+<!-- 利用方法が未だに不明なため，ぺちゃくちゃ検索の方を参考に取りかかる．(外装を気にせず内装をとっととやれやって気分())-->
+<!-- <wizard id="testconf"
+		title="testconf"
+		height="100" width="100"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+		
+		<script type="application/x-javascript" src="chrome://test/content/PAKEClient.js"/>
+		
+<wizardpage id="testconfig"
+			description="config"
+			label="config"
+			pageid="auth" next="regist">
+		<vbox>
+			<hbox>
+			<label id="shibId" value="ID"/>
+			<textbox id="userID" preference=""/>
+			</hbox>
+			<hbox>
+			<label id="shibpass" value="password"/>
+			<textbox id="password" preference=""/>
+			</hbox>
+			<hbox>
+			<button id="shibok" label="認証" oncommand="Test.start();"/>
+			<button id="canchel" label="キャンセル" oncommand=""/>
+			</hbox>
+		</vbox>
+</wizardpage>
+</wizard> -->
+>>>>>>> 0c8f921c4c190847d700acc5e8590ba9de42505a
