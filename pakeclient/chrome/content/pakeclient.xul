@@ -22,13 +22,7 @@
 	 
 <!-- JavaScriptファイルのインポート PAKEfast.jsのファイル読み込み-->
 <script type="application/x-javascript" src="chrome://pakeclient/content/pakeclient.js"/>
-<!-- <script type="application/x-javascript" src="chrome://test/content/MyPAKE.js"/> -->
-<!-- ツールメニューへの追加 -->
 	<menupopup id="menu_ToolsPopup">
-	<!-- 読み込まれたファイルで指定されているアクセス用のものを用いて，その機能で宣言されている機能に対してアクセス-->
 		<menuitem insertafter="devToolsSeparator" label="pakeclient" oncommand="Client.wizard();"/>
-		<!-- <menuitem insertafter="devToolsSeparator" label="test" oncommand="Test.Round1();"/> -->
-		<!-- ダイアログを表示させるためのものを設定 PAKEfast.js内のopenSetupDialog()にアクセス-->
-		<!--<menuitem label="TestDialog" oncommand="openSetupDialog();"/>-->
 	</menupopup>
 </overlay>
