@@ -129,10 +129,10 @@ public class KeyJugglingServlet extends HttpServlet{
 			obj = setRoundOne(request,response,payloadList);
 				//次のラウンドを記録
 			session.setAttribute("Round","Round2");
-			log.info("session = " + (String)session.getAttribute("Round"));
+				//log.info("session = " + (String)session.getAttribute("Round"));
 		}
 		else if(round.equals("Round2")){
-				//試験的にtestSearchを呼び出す
+				
 			try{
 				//レスポンス作成(A)
 			obj = setRoundTwo(request,response,payloadList,payload);
@@ -223,8 +223,12 @@ public class KeyJugglingServlet extends HttpServlet{
 		/*
 		 *未実装
 		 *ldapサーバ側から記録されたパスワードを取得
+		 
+		//試験的にtestSearchを呼び出す
+		log.info("testlog log");
+		testSearch((String)output.get("userID"));
 		 */
-		//パスワードのバイト配列を取得
+			//パスワードのバイト配列を取得
 		String pass = "userpassword";
 		BigInteger Secret = new BigInteger(1,pass.getBytes());
 		
@@ -635,12 +639,12 @@ public class KeyJugglingServlet extends HttpServlet{
 				output.put("senderZKP2",senderZKP2);
 				output.put("message",message);
 				output.put("userID",jObject.optJSONObject("payload").optString("user"));
-				log.info((String)output.get("type"));
+				/*log.info((String)output.get("type"));
 				log.info((String)output.get("GX1"));
 				log.info((String)output.get("GX2"));
 				log.info((String)output.get("message"));
 				log.info((String)output.get("userID"));
-				/*}else{
+				}else{
 					
 				}*/
 			}
@@ -740,13 +744,33 @@ public class KeyJugglingServlet extends HttpServlet{
 	 *未実装
 	 *現状アクセス自体はできているものと思われる
 	 */
-	/*
 	protected void testSearch(String searchfilter)throws NamingException{
 			//Ldapサーバへアクセスする
-			//とりあえず全部埋め込みでいいのでそれで
+			//login.confのファイルはシステムから
+		String config = System.getProperty("java.security.auth.login.config");
+		config = config.substring(7,config.length());
+		Properties prop = new Properties();
+		
+		try{
+			prop.load(new FileInputStream(config));
+		}catch(IOException e){
+				//log.error(e);
+			return;
+		}
+		
 			//アクセス先の指定
 			//LdapPool
-		DefaultLdapFactory factory = new DefaultLdapFactory(new LdapConfig("ldap://localhost","o=test_o,dc=ac,c=JP"));
+			//DefaultLdapFactory factory = new DefaultLdapFactory(new LdapConfig("ldap://localhost","o=test_o,dc=ac,c=JP"));
+			//ldapUrl & baseDn
+		String ldapUrl = prop.getProperty("ldapUrl");
+		String baseDn = prop.getProperty("baseDn");
+		
+			//log.info("ldapUrl & baseDn = " + ldapUrl + " baseDn " + baseDn);
+		
+		ldapUrl = ldapUrl.substring(1,(ldapUrl.length()-1));
+		baseDn = baseDn.substring(1,(baseDn.length()-1));
+		
+		DefaultLdapFactory factory = new DefaultLdapFactory(new LdapConfig(ldapUrl.toString(),baseDn.toString()));
 		
 		SoftLimitLdapPool pool = new SoftLimitLdapPool(factory);
 		
@@ -755,25 +779,51 @@ public class KeyJugglingServlet extends HttpServlet{
 		Ldap ldap = null;
 		String result = null;
 		
+		Attributes attrs = null;
+		Attribute attr = null;
+		String pass = null;
 		try{
 			ldap = pool.checkOut();
 			
 			Iterator<SearchResult> i = ldap.search(new SearchFilter("uid=" + searchfilter),new String[]{"uid","userPassword"});
 			
 			while(i.hasNext()) {
-				SearchResult str = i.next();
-				log.info("number = " + num);
-				log.info("iterator =" + str);
+				SearchResult str = i.next();				
+					//Attributes取得
+				attrs = str.getAttributes();
 				
-				String testStr = str.toString();
-				log.info("iterator string = " + testStr);
+					//Attributesから属性の列挙を取得
+				attr = attrs.get("userPassword");
+					//object → byte → String
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(baos);
+				
+				Object testObj = attr.get();
+				
+				oos.writeObject(testObj);
+				
+				byte[] bytes = baos.toByteArray();
+				String testString = baos.toString();
+				
+				oos.close();
+				baos.close();
+				
+					//char
+				char[] passChar = getChars(bytes);
+				
+					/*
+					 *パスワードとなんらかの文字列を取得
+					 *パスワードのみを取得できていないため修正が必要
+					 */
+				pass = new String().copyValueOf(passChar);
 			}
-		
+			
+			String ID = attr.getID();
 		}catch (Exception e) {
 			log.error("error using the ldap pool.",e);
 		}finally{
 			pool.checkIn(ldap);
 		}
 		pool.close();
-	}*/
+	}
 }
