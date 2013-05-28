@@ -756,15 +756,9 @@ public class KeyJugglingServlet extends HttpServlet{
 				//log.error(e);
 			return;
 		}
-		
-			//アクセス先の指定
-			//LdapPool
-			//DefaultLdapFactory factory = new DefaultLdapFactory(new LdapConfig("ldap://localhost","o=test_o,dc=ac,c=JP"));
-			//ldapUrl & baseDn
-		String ldapUrl = prop.getProperty("ldapUrl");
+        
+        String ldapUrl = prop.getProperty("ldapUrl");
 		String baseDn = prop.getProperty("baseDn");
-		
-			//log.info("ldapUrl & baseDn = " + ldapUrl + " baseDn " + baseDn);
 		
 		ldapUrl = ldapUrl.substring(1,(ldapUrl.length()-1));
 		baseDn = baseDn.substring(1,(baseDn.length()-1));
