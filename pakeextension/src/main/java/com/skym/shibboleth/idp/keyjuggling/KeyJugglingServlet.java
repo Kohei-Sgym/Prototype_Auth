@@ -223,11 +223,11 @@ public class KeyJugglingServlet extends HttpServlet{
 		/*
 		 *未実装
 		 *ldapサーバ側から記録されたパスワードを取得
-		 
+		 */
 		//試験的にtestSearchを呼び出す
 		log.info("testlog log");
-		testSearch((String)output.get("userID"));
-		 */
+		String testPass = testSearch((String)output.get("userID"));
+        
 			//パスワードのバイト配列を取得
 		String pass = "userpassword";
 		BigInteger Secret = new BigInteger(1,pass.getBytes());
@@ -741,10 +741,9 @@ public class KeyJugglingServlet extends HttpServlet{
 	}
 	//vt.Ldapsearch
 	/*
-	 *未実装
-	 *現状アクセス自体はできているものと思われる
+	 *記録されているパスワード取得
 	 */
-	protected void testSearch(String searchfilter)throws NamingException{
+	protected String testSearch(String searchfilter)throws NamingException{
 			//Ldapサーバへアクセスする
 			//login.confのファイルはシステムから
 		String config = System.getProperty("java.security.auth.login.config");
@@ -807,23 +806,26 @@ public class KeyJugglingServlet extends HttpServlet{
 				
 				oos.close();
 				baos.close();
-				
-					//char
-				char[] passChar = getChars(bytes);
-				
-					/*
-					 *パスワードとなんらかの文字列を取得
-					 *パスワードのみを取得できていないため修正が必要
-					 */
-				pass = new String().copyValueOf(passChar);
-			}
-			
-			String ID = attr.getID();
-		}catch (Exception e) {
+                
+                ByteArrayInputStream inBytes = new ByteArrayInputStream(bytes);
+                ObjectInputStream inObject = new ObjectInputStream(inBytes);
+                
+                char passChar = getChars((byte[])inObject.readObject());
+                
+                inbytes.close();
+                inObject.close();
+                
+                //パスワード文字列をresultに代入
+				result = new String.copyValueOf(passChar);
+                
+            }
+        }catch (Exception e) {
 			log.error("error using the ldap pool.",e);
 		}finally{
 			pool.checkIn(ldap);
 		}
 		pool.close();
-	}
+        
+        return result;
+    }
 }
